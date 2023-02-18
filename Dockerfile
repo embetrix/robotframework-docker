@@ -5,10 +5,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install required Packages
 RUN apt-get update && apt-get -y upgrade
-RUN apt-get install -y python3 python3-pip \
+RUN apt-get install -y python3 python3-pip python3-setuptools swig \
                        sudo openssh-client \
                        bash-completion curl \
-                       bmap-tools git nano tmux
+                       git nano tmux libgpgme-dev
 
 # Add robotframework & extensions
 RUN pip3 install robotframework \
@@ -17,6 +17,9 @@ RUN pip3 install robotframework \
                  robotframework-seriallibrary \
                  robotframework-sshlibrary \
                  usbsdmux pyyaml pyserial
+
+RUN pip3 install git+https://github.com/embetrix/bmap-tools@no-exclusiv-mode
+
 
 # Create a non-root user USER
 RUN id ${USER} 2>/dev/null || useradd --create-home ${USER}
